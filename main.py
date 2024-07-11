@@ -1,4 +1,5 @@
 import argparse
+import sys
 from warframe_items_client import WarframeItemsClient
 
 
@@ -23,10 +24,12 @@ def main():
         return
 
     warframe_items_client = WarframeItemsClient(items)
-    result = warframe_items_client.get_excel()
-    if not result:
+    err = warframe_items_client.get_excel()
+    if not err:
         print("Excel file 'orders.xlsx' has been created with the item orders.")
+        return 0
+    return 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
