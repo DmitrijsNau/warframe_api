@@ -14,6 +14,9 @@ class WarframeItemsClient:
             collection = []
             response = requests.get(f"{self.api_items_url}/{item_url}/orders")
             data = response.json()
+            if not data.get("payload"):
+                print(f"Item '{item_url}' not found.")
+                continue
             # structure of data: {"payload": {"orders": []}}
             orders = data["payload"]["orders"]
             for order in orders:
@@ -30,4 +33,8 @@ class WarframeItemsClient:
 
     def get_excel(self):
         items_df = self.get_items()
+        if items_df.empty:
+            print("No items found.")
+            return 1
         items_df.to_excel("orders.xlsx", index=False)
+        return 0
