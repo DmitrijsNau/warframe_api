@@ -20,7 +20,7 @@ class WarframeItemsClient:
             # structure of data: {"payload": {"orders": []}}
             orders = data["payload"]["orders"]
             for order in orders:
-                # Tri only wants online users selling with mod rank 5
+                # only wants online users selling with mod rank 5
                 if order["order_type"] == "sell" and order["user"]["status"] == "ingame" and order["mod_rank"] == 5:
                     collection.append(order)
             if collection:
